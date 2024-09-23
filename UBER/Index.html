@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Details</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 700px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+
+        .map {
+            width: 100%;
+            height: 100%;
+            background-image: url("https://i.imgur.com/l1718e3.jpg");
+            background-size: cover;
+        }
+
+        .pickup-point {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pickup-point h2 {
+            margin: 0;
+        }
+
+        .car-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: white;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .car-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .car-info {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .car-info h3 {
+            margin: 0 0 5px 0;
+        }
+
+        .car-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .car-info .rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .car-info .rating .star {
+            margin-right: 5px;
+            color: #ffcc00;
+        }
+
+        .location-details {
+            padding: 20px;
+            background-color: white;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .location-details h3 {
+            margin: 0;
+        }
+
+        .location-details p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+ 
+            
+        @media (width <= 900px){
+            .center{
+                display: flex;
+                justify-content: center;
+                gap: 2vh;
+            }
+            .assistance-panel{
+                padding: 60px;
+                display: flex;
+                flex-wrap: wrap;
+
+            }
+            .map-container {
+                height: 700px;
+            }
+
+            .car-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .car-info {
+                padding-left: 10px;
+            }
+
+            .action-button {
+                padding: 5px 10px;
+            }
+        
+
+            /* Popup styles */
+            .popup {
+                display: none;
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .popup.show {
+                display: block;
+            }
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background-color: white;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: rgb(255, 0, 0);
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #3e8e41;
+        }
+        .action-button2 {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0052ea;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-container">
+        <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14413.969559479774!2d-49.274014403296874!3d-25.421796782139364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce43e26a836af%3A0xe6bf3c798353b759!2sCollege%20Sesi%20-%20Alto%20da%20Gl%C3%B3ria%2C%20Curitiba!5e0!3m2!1sen!2sbr!4v1726660670050!5m2!1sen!2sbr" width="600" height="1500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="marker"></div>
+        <div class="pickup-point">
+            <h2>Meet at the pickup point</h2>
+        </div>
+    </div>
+
+    <div class="car-details">
+        <div class="car-image">
+            <img src="https://i.imgur.com/7zQj380.jpg" alt="Car Image">
+        </div>
+        <div class="car-info">
+            <h3>KA15AK00-0</h3>
+            <p>White Suzuki S-Presso LXI</p>
+            <div class="rating">
+                <i class="star">★</i>
+                <i class="star">★</i>
+                <i class="star">★</i>
+                <i class="star">★</i>
+                <i class="star">★</i>
+                <span>4.9</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons" >
+        <button class="action-button">Alterar percurso</button>
+        <button class="action-button2" id="security-button">Segurança</button>
+    </div>
+
+    <div class="location-details">
+        <h3>Localização atual</h3>
+        <p>R. Paula Gomes, 282 - São Francisco, Curitiba - PR, 80510-070</p>
+    </div>
+
+    <!-- Popup container -->
+    <div class="popup" id="security-popup">
+        <iframe src="safety.html"  width="400px" height="300px"></iframe>
+    </div>
+
+    <script>
+        document.getElementById('security-button').addEventListener('click', function() {
+            document.getElementById('security-popup').classList.add('show');
+        });
+    </script>
+
+</body>
+</html>
